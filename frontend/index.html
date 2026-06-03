@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Form</title>
+</head>
+<body>
+  <h2>Student Registration Form</h2>
+
+  <form id="studentForm">
+    <input type="text" id="name" placeholder="Name" required><br><br>
+    <input type="text" id="roll" placeholder="Roll Number" required><br><br>
+    <input type="text" id="dept" placeholder="Department" required><br><br>
+    <input type="text" id="semester" placeholder="Semester" required><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="msg"></p>
+
+  <script>
+    document.getElementById("studentForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        roll: document.getElementById("roll").value,
+        dept: document.getElementById("dept").value,
+        semester: document.getElementById("semester").value
+      };
+
+      await fetch("http://localhost:5000/students", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+
+      document.getElementById("msg").innerText = "Student Saved!";
+      this.reset();
+    });
+  </script>
+</body>
+</html>
